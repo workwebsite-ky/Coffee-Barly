@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Coffee Barly – A premium artisan coffee experience. Discover our handcrafted blends, specialty brews, and luxurious café atmosphere." />
+  <meta name="keywords" content="premium coffee, artisan coffee, specialty coffee, coffee shop, Coffee Barly" />
+  <title>Coffee Barly | Premium Artisan Coffee</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Josefin+Sans:wght@200;300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --brown-dark:   #2C1810;
+      --brown-mid:    #5C3317;
+      --brown-light:  #8B5E3C;
+      --brown-warm:   #C49A6C;
+      --gold:         #C9A84C;
+      --gold-light:   #E8C87A;
+      --gold-pale:    #F5E6C8;
+      --white:        #FAF8F5;
+      --off-white:    #F0EBE3;
+      --black:        #0D0A08;
+      --text-dark:    #1A0F09;
+      --text-mid:     #4A3728;
+      --text-light:   #8B7355;
+
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body:    'Josefin Sans', sans-serif;
+      --font-accent:  'Playfair Display', serif;
+
+      --nav-h: 80px;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+    img { display: block; width: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ===== LOADING SCREEN ===== */
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--black);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 20px;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-logo {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    .loader-bar {
+      width: 200px; height: 2px;
+      background: var(--brown-mid);
+      position: relative; overflow: hidden;
+    }
+    .loader-bar::after {
+      content: '';
+      position: absolute; left: -100%; top: 0;
+      width: 100%; height: 100%;
+      background: var(--gold);
+      animation: load 1.8s ease forwards;
+    }
+    @keyframes load {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(13, 10, 8, 0.92);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(201, 168, 76, 0.2);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    .nav-logo span { color: var(--white); font-weight: 300; }
+    .nav-links {
+      display: flex; gap: 40px;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      position: relative;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      padding: 10px 28px;
+      border: 1px solid var(--gold);
+      border-radius: 0;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold) !important;
+      transition: background var(--transition), color var(--transition) !important;
+    }
+    .nav-cta:hover { background: var(--gold) !important; color: var(--black) !important; }
+    .nav-cta::after { display: none !important; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px; cursor: pointer;
+    }
+    .hamburger span {
+      display: block; width: 25px; height: 1px;
+      background: var(--gold);
+      transition: var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Mobile nav */
+    .mobile-nav {
+      display: none;
+      position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: rgba(13, 10, 8, 0.97);
+      backdrop-filter: blur(20px);
+      padding: 30px 5%;
+      flex-direction: column; gap: 20px;
+      z-index: 999;
+      border-top: 1px solid rgba(201, 168, 76, 0.2);
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-size: 0.8rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--off-white);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+      transition: color var(--transition);
+    }
+    .mobile-nav a:hover { color: var(--gold); }
+
+    /* ===== HERO ===== */
+    #hero {
+      height: 100vh;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+    #hero:hover .hero-bg { transform: scale(1.08); }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(13, 10, 8, 0.55) 0%,
+        rgba(13, 10, 8, 0.4) 40%,
+        rgba(13, 10, 8, 0.75) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 0 20px;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s forwards;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 300;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--gold-light); }
+    .hero-sub {
+      font-size: 0.85rem;
+      font-weight: 200;
+      letter-spacing: 0.15em;
+      color: rgba(250, 248, 245, 0.8);
+      margin-bottom: 50px;
+      line-height: 2;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.1s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.3s forwards;
+    }
+    .btn-primary {
+      padding: 18px 50px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border: none; cursor: pointer;
+      position: relative; overflow: hidden;
+      transition: var(--transition);
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gold-light);
+      transform: translateX(-101%);
+      transition: transform var(--transition);
+    }
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary span { position: relative; z-index: 1; }
+    .btn-outline {
+      padding: 17px 50px;
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border: 1px solid rgba(250, 248, 245, 0.5);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: fadeIn 1s 2s forwards;
+    }
+    .scroll-indicator span {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(250, 248, 245, 0.5);
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0; transform: translateX(-40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0; transform: translateX(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ===== SECTION SHARED ===== */
+    section { padding: 100px 5%; }
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text-dark);
+    }
+    .section-title em { font-style: italic; }
+    .section-title.light { color: var(--white); }
+    .divider {
+      width: 60px; height: 1px;
+      background: var(--gold);
+      margin: 24px 0 40px;
+    }
+    .divider.center { margin: 24px auto 40px; }
+
+    /* ===== INTRO STRIP ===== */
+    #intro-strip {
+      background: var(--black);
+      padding: 30px 5%;
+      display: flex; align-items: center; justify-content: center;
+      gap: 60px; flex-wrap: wrap;
+    }
+    .strip-item {
+      display: flex; align-items: center; gap: 14px;
+      color: var(--off-white);
+    }
+    .strip-item i { color: var(--gold); font-size: 1rem; }
+    .strip-item span {
+      font-size: 0.72rem; letter-spacing: 0.2em;
+      text-transform: uppercase; font-weight: 300;
+    }
+    .strip-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--gold);
+    }
+
+    /* ===== ABOUT SECTION ===== */
+    #about {
+      background: var(--off-white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+      height: 600px;
+    }
+    .about-image-wrap img {
+      height: 100%;
+      object-fit: cover;
+    }
+    .about-image-badge {
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 160px; height: 160px;
+      background: var(--gold);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .about-image-badge .num {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1;
+    }
+    .about-image-badge .label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-align: center;
+      padding: 0 10px;
+    }
+    .about-text p {
+      font-size: 0.95rem;
+      line-height: 2;
+      color: var(--text-mid);
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 30px; margin-top: 40px;
+    }
+    .stat {
+      border-left: 2px solid var(--gold);
+      padding-left: 20px;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.5rem; font-weight: 600;
+      color: var(--brown-mid);
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    /* ===== MENU / SIGNATURE ===== */
+    #menu {
+      background: var(--black);
+      text-align: center;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      margin-top: 60px;
+    }
+    .menu-card {
+      position: relative; overflow: hidden;
+      height: 380px;
+      cursor: pointer;
+    }
+    .menu-card img {
+      height: 100%; width: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+      filter: brightness(0.75);
+    }
+    .menu-card:hover img {
+      transform: scale(1.08);
+      filter: brightness(0.55);
+    }
+    .menu-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,10,8,0.9) 0%, transparent 60%);
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 35px 30px;
+    }
+    .menu-card-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .menu-card-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .menu-card-desc {
+      font-size: 0.78rem;
+      color: rgba(250,248,245,0.7);
+      margin-top: 8px;
+      line-height: 1.7;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+    .menu-card:hover .menu-card-desc { max-height: 100px; }
+    .menu-card-price {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      margin-top: 12px;
+    }
+
+    /* ===== FULL MENU SECTION ===== */
+    #full-menu {
+      background: var(--off-white);
+    }
+    .menu-tabs {
+      display: flex; gap: 0;
+      margin-bottom: 50px;
+      border-bottom: 1px solid rgba(92, 51, 23, 0.2);
+    }
+    .tab-btn {
+      padding: 14px 30px;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: none; border: none;
+      cursor: pointer;
+      color: var(--text-light);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: var(--transition);
+      font-family: var(--font-body);
+    }
+    .tab-btn.active {
+      color: var(--brown-mid);
+      border-bottom-color: var(--gold);
+    }
+    .tab-btn:hover { color: var(--brown-mid); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .menu-list { display: grid; gap: 0; }
+    .menu-item {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(92, 51, 23, 0.1);
+      transition: var(--transition);
+    }
+    .menu-item:hover { padding-left: 10px; }
+    .menu-item-left { flex: 1; }
+    .menu-item-name {
+      font-family: var(--font-accent);
+      font-size: 1.15rem;
+      color: var(--text-dark);
+    }
+    .menu-item-desc {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+    .menu-item-price {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--gold);
+      font-weight: 600;
+      margin-left: 30px;
+      white-space: nowrap;
+    }
+
+    /* ===== EXPERIENCE SECTION ===== */
+    #experience {
+      background: var(--brown-dark);
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+    .exp-image {
+      height: 100%;
+      min-height: 500px;
+    }
+    .exp-image img {
+      height: 100%;
+      object-fit: cover;
+    }
+    .exp-content {
+      padding: 100px 80px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .exp-content p {
+      font-size: 0.92rem;
+      line-height: 2;
+      color: rgba(250, 248, 245, 0.75);
+      font-weight: 200;
+      margin-bottom: 16px;
+    }
+    .exp-list {
+      margin-top: 30px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .exp-list-item {
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .exp-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--gold);
+      font-size: 0.9rem;
+    }
+    .exp-text strong {
+      display: block;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .exp-text span {
+      font-size: 0.8rem;
+      color: rgba(250,248,245,0.6);
+      line-height: 1.6;
+    }
+
+    /* ===== FLAVORS ===== */
+    #flavors {
+      background: var(--white);
+      text-align: center;
+    }
+    .flavors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+    .flavor-card {
+      padding: 40px 24px;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .flavor-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--black);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform var(--transition);
+    }
+    .flavor-card:hover::before { transform: scaleY(1); }
+    .flavor-card:hover .flavor-icon,
+    .flavor-card:hover .flavor-name,
+    .flavor-card:hover .flavor-desc { color: var(--white); position: relative; z-index: 1; }
+    .flavor-card:hover .flavor-icon { color: var(--gold); }
+    .flavor-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 20px;
+      transition: color var(--transition);
+      position: relative; z-index: 1;
+    }
+    .flavor-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      transition: color var(--transition);
+      position: relative; z-index: 1;
+    }
+    .flavor-desc {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: var(--text-light);
+      transition: color var(--transition);
+      position: relative; z-index: 1;
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    #testimonials {
+      background: var(--black);
+      overflow: hidden;
+    }
+    .testimonials-inner {
+      max-width: 800px; margin: 0 auto;
+      text-align: center;
+    }
+    .testimonials-slider { position: relative; }
+    .testimonial-slide {
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+    .testimonial-slide.active { display: block; }
+    .testimonial-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .testimonial-quote::before {
+      content: '"';
+      font-size: 6rem;
+      color: var(--gold);
+      opacity: 0.3;
+      position: absolute;
+      top: -30px; left: -20px;
+      line-height: 1;
+      font-family: var(--font-display);
+    }
+    .testimonial-author {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+    }
+    .author-avatar {
+      width: 55px; height: 55px; border-radius: 50%;
+      border: 2px solid var(--gold);
+      overflow: hidden;
+    }
+    .author-avatar img { height: 100%; }
+    .author-info { text-align: left; }
+    .author-name {
+      font-size: 0.85rem;
+      color: var(--white);
+      font-weight: 400;
+    }
+    .author-title {
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    .stars { color: var(--gold); font-size: 0.75rem; margin-bottom: 6px; }
+    .testimonial-nav {
+      display: flex; justify-content: center; gap: 10px;
+      margin-top: 50px;
+    }
+    .t-dot {
+      width: 30px; height: 2px;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: background var(--transition);
+      border: none;
+    }
+    .t-dot.active { background: var(--gold); }
+
+    /* ===== PACKAGES ===== */
+    #packages {
+      background: var(--off-white);
+      text-align: center;
+    }
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+      max-width: 1100px;
+      margin-left: auto; margin-right: auto;
+    }
+    .package-card {
+      background: var(--white);
+      padding: 50px 35px;
+      position: relative;
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      transition: var(--transition);
+    }
+    .package-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(44, 24, 16, 0.1);
+    }
+    .package-card.featured {
+      background: var(--brown-dark);
+      border-color: var(--gold);
+    }
+    .package-card.featured * { color: var(--white) !important; }
+    .package-card.featured .pkg-price { color: var(--gold) !important; }
+    .pkg-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--black) !important;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 6px 20px;
+    }
+    .pkg-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .pkg-tagline {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      letter-spacing: 0.1em;
+      margin-bottom: 30px;
+    }
+    .pkg-price {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: var(--brown-mid);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .pkg-price sup { font-size: 1.2rem; vertical-align: super; }
+    .pkg-per {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      margin-bottom: 30px;
+    }
+    .pkg-features {
+      text-align: left;
+      margin-bottom: 35px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .pkg-features li {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pkg-features li i { color: var(--gold); font-size: 0.7rem; }
+    .pkg-btn {
+      width: 100%;
+      padding: 15px;
+      background: transparent;
+      border: 1px solid var(--brown-mid);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--brown-mid);
+      transition: var(--transition);
+    }
+    .package-card.featured .pkg-btn {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .pkg-btn:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--black);
+    }
+
+    /* ===== CTA BANNER ===== */
+    #cta-banner {
+      background-image: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1400&q=80');
+      background-size: cover; background-position: center;
+      background-attachment: fixed;
+      padding: 130px 5%;
+      text-align: center;
+      position: relative;
+    }
+    #cta-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(13, 10, 8, 0.7);
+    }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-content .section-title.light {
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      margin-bottom: 20px;
+    }
+    .cta-content p {
+      font-size: 0.9rem;
+      color: rgba(250,248,245,0.75);
+      margin-bottom: 40px;
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+    }
+
+    /* ===== FAQ ===== */
+    #faq {
+      background: var(--white);
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 100px 5%;
+    }
+    .faq-list { margin-top: 50px; }
+    .faq-item {
+      border-bottom: 1px solid rgba(92, 51, 23, 0.15);
+    }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+    .faq-q-text {
+      font-family: var(--font-accent);
+      font-size: 1.05rem;
+      color: var(--text-dark);
+    }
+    .faq-icon {
+      width: 28px; height: 28px;
+      border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      transition: transform var(--transition), background var(--transition);
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--gold);
+      color: var(--black);
+    }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .faq-answer-inner {
+      padding-bottom: 24px;
+      font-size: 0.88rem;
+      color: var(--text-light);
+      line-height: 1.9;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      background: var(--brown-dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-info .section-title.light { margin-bottom: 0; }
+    .contact-info p {
+      font-size: 0.88rem;
+      color: rgba(250, 248, 245, 0.65);
+      line-height: 2;
+      margin-bottom: 40px;
+    }
+    .contact-details { display: flex; flex-direction: column; gap: 24px; }
+    .contact-detail-item {
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .contact-detail-icon {
+      width: 42px; height: 42px;
+      border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); flex-shrink: 0;
+    }
+    .contact-detail-text strong {
+      display: block; font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold); margin-bottom: 4px;
+    }
+    .contact-detail-text span {
+      font-size: 0.88rem;
+      color: rgba(250,248,245,0.75);
+    }
+    .contact-form {
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .form-group {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .form-group label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(250, 248, 245, 0.05);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      padding: 16px 20px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color var(--transition);
+      width: 100%;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--gold);
+    }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: var(--brown-dark); color: var(--white); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .submit-btn {
+      padding: 18px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border: none; cursor: pointer;
+      transition: var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .submit-btn:hover { background: var(--gold-light); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--black);
+      padding: 70px 5% 30px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 50px;
+      padding-bottom: 50px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 30px;
+    }
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--gold);
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: rgba(250,248,245,0.45);
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+    .social-links { display: flex; gap: 14px; }
+    .social-link {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(250,248,245,0.5);
+      font-size: 0.85rem;
+      transition: var(--transition);
+    }
+    .social-link:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .footer-col-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a {
+      font-size: 0.82rem;
+      color: rgba(250,248,245,0.45);
+      transition: color var(--transition);
+      letter-spacing: 0.05em;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: rgba(250,248,245,0.25);
+    }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a {
+      font-size: 0.72rem;
+      color: rgba(250,248,245,0.25);
+      transition: color var(--transition);
+    }
+    .footer-legal a:hover { color: var(--gold); }
+
+    /* ===== BACK TO TOP ===== */
+    #back-top {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 48px; height: 48px;
+      background: var(--gold);
+      color: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; cursor: pointer;
+      opacity: 0; visibility: hidden;
+      transition: var(--transition);
+      z-index: 999;
+    }
+    #back-top.visible { opacity: 1; visibility: visible; }
+    #back-top:hover { background: var(--gold-light); }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .whatsapp-float {
+      position: fixed; bottom: 30px; left: 30px;
+      width: 52px; height: 52px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 1.4rem;
+      z-index: 999;
+      transition: var(--transition);
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    /* ===== TOAST ===== */
+    #toast {
+      position: fixed; bottom: 80px; right: 30px;
+      background: var(--gold);
+      color: var(--black);
+      padding: 16px 24px;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      z-index: 9999;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      #about {
+        grid-template-columns: 1fr;
+        gap: 50px;
+      }
+      .about-image-wrap { height: 400px; }
+      .about-image-badge { right: 10px; bottom: -20px; }
+
+      #experience {
+        grid-template-columns: 1fr;
+      }
+      .exp-image { min-height: 300px; }
+      .exp-content { padding: 60px 30px; }
+
+      #contact {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      section { padding: 70px 5%; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-outline { width: 100%; max-width: 260px; text-align: center; }
+      .footer-top { grid-template-columns: 1fr; }
+      #intro-strip { gap: 20px; flex-direction: column; align-items: flex-start; padding: 20px 5%; }
+      .strip-dot { display: none; }
+      .about-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">Coffee Barly</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- BACK TO TOP -->
+<div id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- TOAST -->
+<div id="toast">Message sent successfully!</div>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Coffee <span>Barly</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Signature</a></li>
+    <li><a href="#full-menu">Menu</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#contact" class="nav-cta">Reserve</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#about" onclick="toggleMenu()">Our Story</a>
+  <a href="#menu" onclick="toggleMenu()">Signature</a>
+  <a href="#full-menu" onclick="toggleMenu()">Menu</a>
+  <a href="#experience" onclick="toggleMenu()">Experience</a>
+  <a href="#flavors" onclick="toggleMenu()">Flavors</a>
+  <a href="#packages" onclick="toggleMenu()">Packages</a>
+  <a href="#contact" onclick="toggleMenu()">Reserve</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Est. 2019 · Premium Artisan Coffee</p>
+    <h1 class="hero-title">Where Every Sip<br>Tells a <em>Story</em></h1>
+    <p class="hero-sub">Handcrafted blends. Rare origins. Moments made golden.</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary"><span>Explore Menu</span></a>
+      <a href="#contact" class="btn-outline">Reserve a Table</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- INTRO STRIP -->
+<div id="intro-strip">
+  <div class="strip-item"><i class="fas fa-coffee"></i><span>Single-Origin Beans</span></div>
+  <div class="strip-dot"></div>
+  <div class="strip-item"><i class="fas fa-award"></i><span>Award-Winning Baristas</span></div>
+  <div class="strip-dot"></div>
+  <div class="strip-item"><i class="fas fa-leaf"></i><span>Sustainably Sourced</span></div>
+  <div class="strip-dot"></div>
+  <div class="strip-item"><i class="fas fa-fire"></i><span>Small-Batch Roasted</span></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-wrap reveal-left">
+    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80" alt="Coffee Barly barista crafting coffee" />
+    <div class="about-image-badge">
+      <span class="num">5+</span>
+      <span class="label">Years of Craft</span>
+    </div>
+  </div>
+  <div class="about-text reveal-right">
+    <p class="section-label">Our Story</p>
+    <h2 class="section-title">Born from a <em>passion</em><br>for perfection</h2>
+    <div class="divider"></div>
+    <p>Coffee Barly was born from a simple obsession: the perfect cup. Founded in 2019, we believe that great coffee is not just a drink — it is a ritual, a pause, a moment of pure presence in a rushing world.</p>
+    <p>Every bean we source tells a story of its land. Every roast we craft is a conversation between heat and time. Every cup we serve is our promise of quality, warmth, and intention.</p>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Origins Sourced</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">30k+</div>
+        <div class="stat-label">Happy Guests</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">48</div>
+        <div class="stat-label">Menu Items</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE MENU CARDS -->
+<section id="menu">
+  <p class="section-label" style="color:var(--gold)">Signature Selections</p>
+  <h2 class="section-title light">Our <em>Finest</em> Creations</h2>
+  <div class="divider" style="background:var(--gold)"></div>
+  <div class="menu-grid reveal">
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80" alt="Espresso" loading="lazy" />
+      <div class="menu-card-overlay">
+        <div class="menu-card-tag">Classic</div>
+        <div class="menu-card-name">The Golden Shot</div>
+        <div class="menu-card-desc">A double ristretto pulled from our house Ethiopian blend — thick, syrupy, and luminous with notes of dark chocolate and mandarin.</div>
+        <div class="menu-card-price">from $4.50</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=600&q=80" alt="Latte" loading="lazy" />
+      <div class="menu-card-overlay">
+        <div class="menu-card-tag">Signature</div>
+        <div class="menu-card-name">Barly Velvet Latte</div>
+        <div class="menu-card-desc">Our signature latte with micro-foamed organic milk, a touch of Madagascan vanilla, and a dusting of raw cacao.</div>
+        <div class="menu-card-price">from $6.00</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80" alt="Cold Brew" loading="lazy" />
+      <div class="menu-card-overlay">
+        <div class="menu-card-tag">Cold Brew</div>
+        <div class="menu-card-name">Midnight Reserve</div>
+        <div class="menu-card-desc">Steeped for 24 hours in filtered water, our cold brew is smooth, bold, and kissed with light caramel undertones.</div>
+        <div class="menu-card-price">from $5.50</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&q=80" alt="Pour Over" loading="lazy" />
+      <div class="menu-card-overlay">
+        <div class="menu-card-tag">Pour Over</div>
+        <div class="menu-card-name">Dawn Ritual</div>
+        <div class="menu-card-desc">A slow, meditative pour-over using Colombian Geisha beans — floral, bright, and endlessly refined.</div>
+        <div class="menu-card-price">from $7.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FULL MENU -->
+<section id="full-menu">
+  <p class="section-label">Full Menu</p>
+  <h2 class="section-title">Explore Every <em>Cup</em></h2>
+  <div class="divider"></div>
+
+  <div class="menu-tabs reveal">
+    <button class="tab-btn active" onclick="switchTab(this, 'hot')">Hot Drinks</button>
+    <button class="tab-btn" onclick="switchTab(this, 'cold')">Cold Drinks</button>
+    <button class="tab-btn" onclick="switchTab(this, 'specialty')">Specialty</button>
+    <button class="tab-btn" onclick="switchTab(this, 'food')">Food</button>
+  </div>
+
+  <!-- HOT DRINKS -->
+  <div class="tab-content active" id="hot">
+    <ul class="menu-list">
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Espresso</div>
+          <div class="menu-item-desc">Pure, concentrated, single or double shot</div>
+        </div>
+        <div class="menu-item-price">$3.50 / $4.50</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Americano</div>
+          <div class="menu-item-desc">Espresso with hot water — bold and clean</div>
+        </div>
+        <div class="menu-item-price">$4.00</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Flat White</div>
+          <div class="menu-item-desc">Double ristretto, silky micro-foam, perfectly balanced</div>
+        </div>
+        <div class="menu-item-price">$5.50</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Cappuccino</div>
+          <div class="menu-item-desc">Equal parts espresso, steamed milk, and rich foam</div>
+        </div>
+        <div class="menu-item-price">$5.00</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Cortado</div>
+          <div class="menu-item-desc">Espresso cut with warm milk to reduce acidity</div>
+        </div>
+        <div class="menu-item-price">$4.50</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Café au Lait</div>
+          <div class="menu-item-desc">Brewed coffee with steamed milk — smooth and comforting</div>
+        </div>
+        <div class="menu-item-price">$4.50</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Mocha</div>
+          <div class="menu-item-desc">Espresso, Belgian chocolate, steamed milk, whipped cream</div>
+        </div>
+        <div class="menu-item-price">$6.00</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- COLD DRINKS -->
+  <div class="tab-content" id="cold">
+    <ul class="menu-list">
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Cold Brew</div>
+          <div class="menu-item-desc">24-hour steep, served over large ice</div>
+        </div>
+        <div class="menu-item-price">$5.50</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Nitro Cold Brew</div>
+          <div class="menu-item-desc">Nitrogen-infused, cascading, creamy without cream</div>
+        </div>
+        <div class="menu-item-price">$6.50</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Iced Latte</div>
+          <div class="menu-item-desc">Espresso over ice with your choice of milk</div>
+        </div>
+        <div class="menu-item-price">$5.50</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Iced Vanilla Latte</div>
+          <div class="menu-item-desc">Barly house vanilla syrup, espresso, oat milk</div>
+        </div>
+        <div class="menu-item-price">$6.00</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Iced Matcha Latte</div>
+          <div class="menu-item-desc">Ceremonial grade matcha, oat milk, light honey</div>
+        </div>
+        <div class="menu-item-price">$6.00</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Blended Caramel Frappé</div>
+          <div class="menu-item-desc">Cold brew, caramel, ice, topped with whipped cream</div>
+        </div>
+        <div class="menu-item-price">$7.00</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- SPECIALTY -->
+  <div class="tab-content" id="specialty">
+    <ul class="menu-list">
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Barly Golden Latte</div>
+          <div class="menu-item-desc">Turmeric, ginger, black pepper, oat milk — our golden elixir</div>
+        </div>
+        <div class="menu-item-price">$6.50</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Rose Cardamom Espresso</div>
+          <div class="menu-item-desc">Espresso with rose water and ground cardamom — Arabian inspiration</div>
+        </div>
+        <div class="menu-item-price">$6.00</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Mushroom Coffee</div>
+          <div class="menu-item-desc">Lion's mane + espresso + oat milk — focus in a cup</div>
+        </div>
+        <div class="menu-item-price">$7.00</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Honey Lavender Latte</div>
+          <div class="menu-item-desc">Lavender syrup, raw honey, espresso, steamed milk</div>
+        </div>
+        <div class="menu-item-price">$6.50</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Ethiopian Single Origin Pour-Over</div>
+          <div class="menu-item-desc">Light roast, blueberry and jasmine notes, brewed to order</div>
+        </div>
+        <div class="menu-item-price">$8.00</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- FOOD -->
+  <div class="tab-content" id="food">
+    <ul class="menu-list">
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Almond Croissant</div>
+          <div class="menu-item-desc">Laminated dough, almond cream, toasted flakes</div>
+        </div>
+        <div class="menu-item-price">$4.50</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Avocado Toast</div>
+          <div class="menu-item-desc">Sourdough, whipped ricotta, avocado, chili flakes</div>
+        </div>
+        <div class="menu-item-price">$9.00</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Dark Chocolate Brownie</div>
+          <div class="menu-item-desc">Dense, fudgy, topped with gold sea salt flakes</div>
+        </div>
+        <div class="menu-item-price">$4.00</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Acai Bowl</div>
+          <div class="menu-item-desc">Organic acai, granola, seasonal fruits, honey drizzle</div>
+        </div>
+        <div class="menu-item-price">$10.00</div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-left">
+          <div class="menu-item-name">Smoked Salmon Bagel</div>
+          <div class="menu-item-desc">Cream cheese, capers, red onion, dill</div>
+        </div>
+        <div class="menu-item-price">$11.00</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="exp-image">
+    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80" alt="Coffee Barly café interior" loading="lazy" />
+  </div>
+  <div class="exp-content reveal-right">
+    <p class="section-label">The Barly Experience</p>
+    <h2 class="section-title light">More than coffee.<br>A <em>sanctuary</em>.</h2>
+    <div class="divider"></div>
+    <p>Coffee Barly is designed to be a space of genuine pause — warm lighting, curated acoustics, and an atmosphere where time slows down and every detail is considered.</p>
+    <p>We are more than a café. We are a corner of the world where you can breathe, think, create, and connect.</p>
+    <div class="exp-list">
+      <div class="exp-list-item">
+        <div class="exp-icon"><i class="fas fa-wifi"></i></div>
+        <div class="exp-text">
+          <strong>High-Speed Workspace</strong>
+          <span>Dedicated work zones with fast Wi-Fi and ample power outlets</span>
+        </div>
+      </div>
+      <div class="exp-list-item">
+        <div class="exp-icon"><i class="fas fa-users"></i></div>
+        <div class="exp-text">
+          <strong>Private Event Rooms</strong>
+          <span>Host your next meeting, photoshoot, or gathering in our exclusive spaces</span>
+        </div>
+      </div>
+      <div class="exp-list-item">
+        <div class="exp-icon"><i class="fas fa-music"></i></div>
+        <div class="exp-text">
+          <strong>Live Sessions</strong>
+          <span>Weekly acoustic performances and curated DJ evenings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLAVORS -->
+<section id="flavors">
+  <p class="section-label">Tasting Notes</p>
+  <h2 class="section-title">Our Flavor <em>Profiles</em></h2>
+  <div class="divider center"></div>
+  <div class="flavors-grid reveal">
+    <div class="flavor-card">
+      <div class="flavor-icon"><i class="fas fa-seedling"></i></div>
+      <div class="flavor-name">Floral & Bright</div>
+      <div class="flavor-desc">Ethiopian and Kenyan origins with jasmine, bergamot, and citrus top notes</div>
+    </div>
+    <div class="flavor-card">
+      <div class="flavor-icon"><i class="fas fa-cookie"></i></div>
+      <div class="flavor-name">Nutty & Sweet</div>
+      <div class="flavor-desc">Brazilian and Colombian beans with hazelnut, caramel, and brown sugar warmth</div>
+    </div>
+    <div class="flavor-card">
+      <div class="flavor-icon"><i class="fas fa-fire-alt"></i></div>
+      <div class="flavor-name">Bold & Smoky</div>
+      <div class="flavor-desc">Sumatra and Guatemala dark roasts — tobacco, dark chocolate, and cedar</div>
+    </div>
+    <div class="flavor-card">
+      <div class="flavor-icon"><i class="fas fa-wine-glass-alt"></i></div>
+      <div class="flavor-name">Fruity & Winey</div>
+      <div class="flavor-desc">Natural process coffees bursting with cherry, blueberry, and red wine character</div>
+    </div>
+    <div class="flavor-card">
+      <div class="flavor-icon"><i class="fas fa-snowflake"></i></div>
+      <div class="flavor-name">Smooth & Clean</div>
+      <div class="flavor-desc">Washed process Honduran and Peruvian — milk chocolate and almond clarity</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-inner reveal">
+    <p class="section-label">What Guests Say</p>
+    <h2 class="section-title light" style="margin-bottom:60px">Stories of <em>Delight</em></h2>
+
+    <div class="testimonials-slider">
+      <div class="testimonial-slide active">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-quote">Coffee Barly completely changed how I think about coffee. The pour-over here is the most complex, beautiful cup I have ever tasted — and the space makes you want to stay forever.</div>
+        <div class="testimonial-author">
+          <div class="author-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah M." /></div>
+          <div class="author-info">
+            <div class="author-name">Sarah Mitchell</div>
+            <div class="author-title">Coffee Enthusiast · New York</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-slide">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-quote">I come here every single morning. The Barly Velvet Latte is my non-negotiable. The baristas know exactly what I want, and the atmosphere helps me do my best work.</div>
+        <div class="testimonial-author">
+          <div class="author-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="James R." /></div>
+          <div class="author-info">
+            <div class="author-name">James Rodriguez</div>
+            <div class="author-title">Creative Director · Los Angeles</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-slide">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-quote">We hosted our brand launch here and it was absolutely perfect. The team went above and beyond, the space was stunning, and the coffee kept our guests glowing all evening.</div>
+        <div class="testimonial-author">
+          <div class="author-avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Priya K." /></div>
+          <div class="author-info">
+            <div class="author-name">Priya Kapoor</div>
+            <div class="author-title">Brand Founder · Chicago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-nav">
+      <button class="t-dot active" onclick="goToSlide(0)"></button>
+      <button class="t-dot" onclick="goToSlide(1)"></button>
+      <button class="t-dot" onclick="goToSlide(2)"></button>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages">
+  <p class="section-label">Memberships</p>
+  <h2 class="section-title">Choose Your <em>Ritual</em></h2>
+  <div class="divider center"></div>
+  <p style="max-width:600px;margin:0 auto;font-size:0.9rem;color:var(--text-light);line-height:1.9;">
+    Our membership packages are designed for those who take their coffee seriously — and their mornings personally.
+  </p>
+
+  <div class="packages-grid">
+    <div class="package-card reveal">
+      <div class="pkg-name">Everyday</div>
+      <div class="pkg-tagline">Start your mornings right</div>
+      <div class="pkg-price"><sup>$</sup>39</div>
+      <div class="pkg-per">per month</div>
+      <ul class="pkg-features">
+        <li><i class="fas fa-check"></i> 10 drinks of your choice / month</li>
+        <li><i class="fas fa-check"></i> 10% off all food items</li>
+        <li><i class="fas fa-check"></i> Priority ordering</li>
+        <li><i class="fas fa-check"></i> Monthly roast selection email</li>
+      </ul>
+      <button class="pkg-btn">Get Started</button>
+    </div>
+
+    <div class="package-card featured reveal">
+      <div class="pkg-badge">Most Popular</div>
+      <div class="pkg-name">Connoisseur</div>
+      <div class="pkg-tagline">For the dedicated coffee lover</div>
+      <div class="pkg-price"><sup>$</sup>79</div>
+      <div class="pkg-per">per month</div>
+      <ul class="pkg-features">
+        <li><i class="fas fa-check"></i> Unlimited drip coffee & espresso</li>
+        <li><i class="fas fa-check"></i> 2 specialty drinks / week</li>
+        <li><i class="fas fa-check"></i> 20% off all food items</li>
+        <li><i class="fas fa-check"></i> Reserved seat priority</li>
+        <li><i class="fas fa-check"></i> Monthly 250g home roast bag</li>
+      </ul>
+      <button class="pkg-btn">Get Started</button>
+    </div>
+
+    <div class="package-card reveal">
+      <div class="pkg-name">Barly Elite</div>
+      <div class="pkg-tagline">The complete experience</div>
+      <div class="pkg-price"><sup>$</sup>149</div>
+      <div class="pkg-per">per month</div>
+      <ul class="pkg-features">
+        <li><i class="fas fa-check"></i> Unlimited all drinks</li>
+        <li><i class="fas fa-check"></i> Free food with every visit</li>
+        <li><i class="fas fa-check"></i> Private event room booking</li>
+        <li><i class="fas fa-check"></i> Personal barista consultation</li>
+        <li><i class="fas fa-check"></i> 500g premium home roast / month</li>
+        <li><i class="fas fa-check"></i> Exclusive cupping events access</li>
+      </ul>
+      <button class="pkg-btn">Get Started</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section id="cta-banner">
+  <div class="cta-content reveal">
+    <p class="section-label" style="color:var(--gold)">Reservations & Events</p>
+    <h2 class="section-title light">Reserve your <em>table</em><br>or private space</h2>
+    <p>Whether a quiet morning for one or a gathering of many — Coffee Barly is your home away from home.</p>
+    <a href="#contact" class="btn-primary"><span>Book Your Experience</span></a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="max-width:100%;padding:100px 5%">
+  <div style="max-width:780px;margin:0 auto">
+    <p class="section-label">Common Questions</p>
+    <h2 class="section-title">Frequently <em>Asked</em></h2>
+    <div class="divider"></div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-q-text">Do you offer dairy-free milk alternatives?</span>
+          <div class="faq-icon"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes! We offer oat milk, almond milk, soy milk, and coconut milk as substitutes at no extra charge. Our baristas are trained to optimize texturing for each milk type.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-q-text">Can I purchase whole beans or ground coffee to take home?</span>
+          <div class="faq-icon"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Absolutely. We sell our small-batch roasted beans in 250g and 500g bags. Just ask at the counter or browse our retail shelf near the entrance. We also offer custom grinding to your preferred brew method.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-q-text">How do I book the private event space?</span>
+          <div class="faq-icon"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Use our reservation form below or email us directly at contactglanders@gmail.com. We accommodate private bookings for up to 40 guests. Please allow at least 72 hours notice for weekday events and 1 week for weekends.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-q-text">Are your memberships auto-renewing?</span>
+          <div class="faq-icon"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes, all memberships renew monthly. You can cancel, pause, or upgrade at any time with no penalty — simply contact us at least 5 days before your renewal date.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-q-text">Do you cater for corporate offices or events?</span>
+          <div class="faq-icon"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes, we offer bespoke catering packages for corporate events, photo shoots, private parties, and office deliveries. Get in touch via email and we will create a custom proposal for you.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-info reveal-left">
+    <p class="section-label">Get in Touch</p>
+    <h2 class="section-title light">We'd love to<br><em>hear from you</em></h2>
+    <div class="divider" style="background:var(--gold)"></div>
+    <p>Whether you want to make a reservation, enquire about an event, or simply say hello — our team is here for you.</p>
+    <div class="contact-details">
+      <div class="contact-detail-item">
+        <div class="contact-detail-icon"><i class="fas fa-envelope"></i></div>
+        <div class="contact-detail-text">
+          <strong>Email Us</strong>
+          <span>contactglanders@gmail.com</span>
+        </div>
+      </div>
+      <div class="contact-detail-item">
+        <div class="contact-detail-icon"><i class="fas fa-clock"></i></div>
+        <div class="contact-detail-text">
+          <strong>Opening Hours</strong>
+          <span>Mon – Fri: 7:00 AM – 9:00 PM<br>Sat – Sun: 8:00 AM – 10:00 PM</span>
+        </div>
+      </div>
+      <div class="contact-detail-item">
+        <div class="contact-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="contact-detail-text">
+          <strong>Find Us</strong>
+          <span>125 Golden Lane, Arts District<br>Your City, ST 10001</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form reveal-right">
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" id="fname" placeholder="Your first name" />
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" id="lname" placeholder="Your last name" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="email" placeholder="your@email.com" />
+    </div>
+    <div class="form-group">
+      <label>Enquiry Type</label>
+      <select id="subject">
+        <option value="">Select an option</option>
+        <option>Table Reservation</option>
+        <option>Private Event Booking</option>
+        <option>Corporate Catering</option>
+        <option>Membership Enquiry</option>
+        <option>General Question</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <textarea id="message" placeholder="Tell us more..."></textarea>
+    </div>
+    <button class="submit-btn" onclick="submitForm()">Send Message</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Coffee Barly</div>
+      <p class="footer-tagline">A premium artisan coffee experience crafted for those who believe great coffee deserves great company. Every sip. Every morning. Every story.</p>
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#menu">Signature Menu</a></li>
+        <li><a href="#full-menu">Full Menu</a></li>
+        <li><a href="#experience">Experience</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#packages">Memberships</a></li>
+        <li><a href="#contact">Reservations</a></li>
+        <li><a href="#contact">Private Events</a></li>
+        <li><a href="#contact">Catering</a></li>
+        <li><a href="#contact">Gift Cards</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="mailto:contactglanders@gmail.com">contactglanders@gmail.com</a></li>
+        <li><a href="#">125 Golden Lane, Arts District</a></li>
+        <li><a href="#">Mon–Fri: 7AM – 9PM</a></li>
+        <li><a href="#">Sat–Sun: 8AM – 10PM</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Coffee Barly. All rights reserved.</p>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ===== LOADER =====
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hidden');
+    }, 2000);
+  });
+
+  // ===== NAV SCROLL =====
+  const navbar = document.getElementById('navbar');
+  const backTop = document.getElementById('back-top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      navbar.classList.add('scrolled');
+      backTop.classList.add('visible');
+    } else {
+      navbar.classList.remove('scrolled');
+      backTop.classList.remove('visible');
+    }
+  });
+
+  // ===== HAMBURGER =====
+  function toggleMenu() {
+    const ham = document.getElementById('hamburger');
+    const nav = document.getElementById('mobile-nav');
+    ham.classList.toggle('open');
+    nav.classList.toggle('open');
+  }
+
+  // ===== SCROLL REVEAL =====
+  const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        // Stagger siblings
+        const siblings = e.target.parentElement.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+        let idx = Array.from(siblings).indexOf(e.target);
+        e.target.style.transitionDelay = (idx * 0.1) + 's';
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ===== MENU TABS =====
+  function switchTab(btn, id) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(id).classList.add('active');
+  }
+
+  // ===== TESTIMONIAL SLIDER =====
+  let currentSlide = 0;
+  function goToSlide(n) {
+    document.querySelectorAll('.testimonial-slide')[currentSlide].classList.remove('active');
+    document.querySelectorAll('.t-dot')[currentSlide].classList.remove('active');
+    currentSlide = n;
+    document.querySelectorAll('.testimonial-slide')[currentSlide].classList.add('active');
+    document.querySelectorAll('.t-dot')[currentSlide].classList.add('active');
+  }
+  setInterval(() => {
+    const next = (currentSlide + 1) % 3;
+    goToSlide(next);
+  }, 5000);
+
+  // ===== FAQ =====
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // ===== CONTACT FORM =====
+  function submitForm() {
+    const fname = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    if (!fname || !email || !message) {
+      alert('Please fill in at least your name, email, and message.');
+      return;
+    }
+    const subject = encodeURIComponent('Coffee Barly Enquiry from ' + fname);
+    const body = encodeURIComponent(
+      `Name: ${fname} ${document.getElementById('lname').value}\nEmail: ${email}\n\n${message}`
+    );
+    window.location.href = `mailto:contactglanders@gmail.com?subject=${subject}&body=${body}`;
+    // Show toast
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  // ===== PACKAGE BUTTONS =====
+  document.querySelectorAll('.pkg-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
